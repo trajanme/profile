@@ -23,45 +23,81 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.blue.shade50,
         appBar: AppBar(
           title: const Text('My Profile'),
         ),
-        body: Center(
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
                 'assets/image.png',
                 height: 200,
               ),
-              const Text('Ishikawa Shintaro'),
-              const Row(
-                children: [Text('所属：'), Text('○○株式会社')],
+              const Text(
+                'Ishikawa Shintaro',
+                style: TextStyle(fontSize: 30),
               ),
-              const Row(
-                children: [Text('電話：'), Text('070-xxxx-xxxx')],
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Text(
+                      '所属：',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text('○○株式会社')
+                  ],
+                ),
               ),
-              Row(
-                children: [
-                  const Text('メール：'),
-                  const Text('shintaro@example.com'),
-                  TextButton(
-                      onPressed: () async {
-                        launchURL(
-                            'mailto:$mailAddress?subject=$mailTitle&body=$mailContents');
-                      },
-                      child: const Icon(Icons.mail))
-                ],
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Text(
+                      '電話：',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text('070-xxxx-xxxx')
+                  ],
+                ),
               ),
-              Row(
-                children: [
-                  const Text('Website：'),
-                  Text(website),
-                  TextButton(
-                      onPressed: () async {
-                        launchURL(website);
-                      },
-                      child: const Icon(Icons.public))
-                ],
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    const Text(
+                      'メール：',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    const Text('shintaro@example.com'),
+                    TextButton(
+                        onPressed: () async {
+                          launchURL(
+                              'mailto:$mailAddress?subject=$mailTitle&body=$mailContents');
+                        },
+                        child: const Icon(Icons.mail))
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    const Text(
+                      'Website：',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    Text(website),
+                    TextButton(
+                        onPressed: () async {
+                          launchURL(website);
+                        },
+                        child: const Icon(Icons.public))
+                  ],
+                ),
               )
             ],
           ),
