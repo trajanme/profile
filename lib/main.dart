@@ -17,7 +17,10 @@ class MyApp extends StatelessWidget {
         body: Center(
           child: Column(
             children: [
-              Image.asset('assets/image.png'),
+              Image.asset(
+                'assets/image.png',
+                height: 200,
+              ),
               const Text('Ishikawa Shintaro'),
               const Row(
                 children: [Text('所属：'), Text('○○株式会社')],
