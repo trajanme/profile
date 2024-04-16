@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
   final String mailAddress = 'flutter.database@gmail.com';
   final String mailTitle = '件名';
   final String mailContents = 'メール本文';
+  final String website = 'https://github.com/trajanme';
 
   Future<void> launchURL(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
@@ -51,8 +52,16 @@ class MyApp extends StatelessWidget {
                       child: const Icon(Icons.mail))
                 ],
               ),
-              const Row(
-                children: [Text('Website：'), Text('https://example.com')],
+              Row(
+                children: [
+                  const Text('Website：'),
+                  Text(website),
+                  TextButton(
+                      onPressed: () async {
+                        launchURL(website);
+                      },
+                      child: const Icon(Icons.public))
+                ],
               )
             ],
           ),
