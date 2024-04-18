@@ -1,18 +1,24 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:screenshot/screenshot.dart';
+import 'package:path_provider/path_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   final String mailAddress = 'flutter.database@gmail.com';
   final String mailTitle = '件名';
   final String mailContents = 'メール本文';
   final String website = 'https://github.com/trajanme';
+
+  ScreenshotController screenshotController = ScreenshotController();
 
   Future<void> launchURL(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
@@ -28,8 +34,21 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           actions: [
             TextButton(
-                onPressed: () {
-                  Share.share('こんにちは。Shintaroです。');
+                onPressed: () async {
+                  await screenshotController
+                      .capture(delay: const Duration(milliseconds: 10))
+                      .then((image) async {
+                    if (image != null) {
+                      final directory =
+                          (await getApplicationDocumentsDirectory()).path;
+                      final imagePath =
+                          await File('$directory/image.png').create();
+                      await imagePath.writeAsBytes(image);
+
+                      await Share.shareXFiles([XFile(imagePath.path)],
+                          text: '私のプロフィールです');
+                    }
+                  });
                 },
                 child: const Icon(Icons.share))
           ],
@@ -40,35 +59,42 @@ class MyApp extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                'assets/image.png',
-                height: 200,
-              ),
-              const Text(
-                'Ishikawa Shintaro',
-                style: TextStyle(fontSize: 30),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Row(
+              Screenshot(
+                controller: screenshotController,
+                child: Column(
                   children: [
-                    Text(
-                      '所属：',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Image.asset(
+                      'assets/image.png',
+                      height: 200,
                     ),
-                    Text('○○株式会社')
-                  ],
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Text(
-                      '電話：',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    const Text(
+                      'Ishikawa Shintaro',
+                      style: TextStyle(fontSize: 30),
                     ),
-                    Text('070-xxxx-xxxx')
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            '所属：',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text('○○株式会社')
+                        ],
+                      ),
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            '電話：',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          Text('070-xxxx-xxxx')
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
