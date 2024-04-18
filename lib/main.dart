@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:share_plus/share_plus.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,6 +26,13 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         backgroundColor: Colors.blue.shade50,
         appBar: AppBar(
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Share.share('こんにちは。Shintaroです。');
+                },
+                child: const Icon(Icons.share))
+          ],
           title: const Text('My Profile'),
         ),
         body: Padding(
