@@ -10,11 +10,11 @@ import 'package:path_provider/path_provider.dart';
 import 'count.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class Home extends StatelessWidget {
   final String mailContents = 'メール本文';
   final String website = 'https://github.com/trajanme';
 
-  ScreenshotController screenshotController = ScreenshotController();
+  final ScreenshotController screenshotController = ScreenshotController();
 
   Future<void> launchURL(String url) async {
     if (!await launchUrl(Uri.parse(url))) {
